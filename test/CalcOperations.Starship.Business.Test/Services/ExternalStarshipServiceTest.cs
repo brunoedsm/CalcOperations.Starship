@@ -19,13 +19,22 @@ namespace CalcOperations.Starship.Business.Test
         }
 
         [Fact]
-        public void Service_Should_Return_List_Of_Starships()
+        public void Service_Should_Throw_When_Missing_Endpoint()
         {
+            //Act && Assert
+            Assert.Throws<NullReferenceException>(() => new ExternalStarshipService(null, Substitute.For<ILogger<ExternalStarshipService>>()));
+        }
+
+        [Fact]
+        public void Service_Should_Not_Throw_When_Endpoint_Configured()
+        {
+            // Arrange
             var service = new ExternalStarshipService(configuration, Substitute.For<ILogger<ExternalStarshipService>>());
 
-            var result = service.GetAll();
+            // Act && Assert
+            var response = service.GetAll();
 
-            Assert.NotNull(result);
+            Assert.NotNull(response.Result);
         }
     }
 }

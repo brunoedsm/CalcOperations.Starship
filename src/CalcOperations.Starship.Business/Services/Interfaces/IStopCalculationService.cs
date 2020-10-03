@@ -6,7 +6,7 @@ namespace CalcOperations.Starship.Business.Services.Interfaces
 
     public interface IStopCalculationService
     {
-       List<StarshipResult> GetAll();
+       List<StopCalculationResult> GetStopCalculationFromStarships(double distanceInMegaLights);
     }
 
 }

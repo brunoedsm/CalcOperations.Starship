@@ -19,20 +19,20 @@ namespace CalcOperations.Starship.Business.Services
         public ExternalStarshipService(IConfiguration config,ILogger<ExternalStarshipService> logger)
         {
             _logger = logger;
-            externalServiceEndpoint = config.GetValue<string>("application:swapi_endpoint") ?? throw new ArgumentNullException("External SWAPI address not found");
-            pagination = 0;
+            externalServiceEndpoint = config.GetValue<string>("application:swapi_endpoint_starships") ?? throw new NullReferenceException("External SWAPI address not found");
+            pagination = 1;
         }
         public async Task<List<StarshipResult>> GetAll()
         {
             var result = new List<StarshipResult>();
 
-            var starshipResponse = await externalServiceEndpoint.AppendPathSegment($"/starships/?page={pagination}").GetJsonAsync<StarshipResponse>();
+            var starshipResponse = await externalServiceEndpoint.SetQueryParam("page",pagination).GetJsonAsync<StarshipResponse>();
             result.AddRange(starshipResponse.Results);
 
             while(starshipResponse.Next != null)
             {
                 pagination++;
-                starshipResponse = await externalServiceEndpoint.AppendPathSegment($"/starships/?page={pagination}").GetJsonAsync<StarshipResponse>();
+                starshipResponse = await externalServiceEndpoint.SetQueryParam("page",pagination).GetJsonAsync<StarshipResponse>();
                 result.AddRange(starshipResponse.Results);   
             }
             return result;
