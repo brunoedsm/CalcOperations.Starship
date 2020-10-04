@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D0CC9C80-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcOperations.Starship.Business.Test", "test\CalcOperations.Starship.Business.Test\CalcOperations.Starship.Business.Test.csproj", "{1525BD89-4E09-436F-BA09-D09AA99B9B0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcOperations.Starship.Client", "src\CalcOperations.Starship.Client\CalcOperations.Starship.Client.csproj", "{C87A187B-3697-4BDA-9585-ECEF6E63694A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,9 +50,22 @@ Global
 		{1525BD89-4E09-436F-BA09-D09AA99B9B0B}.Release|x64.Build.0 = Release|Any CPU
 		{1525BD89-4E09-436F-BA09-D09AA99B9B0B}.Release|x86.ActiveCfg = Release|Any CPU
 		{1525BD89-4E09-436F-BA09-D09AA99B9B0B}.Release|x86.Build.0 = Release|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Debug|x64.Build.0 = Debug|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Debug|x86.Build.0 = Debug|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Release|x64.ActiveCfg = Release|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Release|x64.Build.0 = Release|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Release|x86.ActiveCfg = Release|Any CPU
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F980A583-D7DE-4685-AC5C-889175157CD0} = {DD78812B-294A-4274-B72B-1E6E4B7D15FC}
 		{1525BD89-4E09-436F-BA09-D09AA99B9B0B} = {D0CC9C80-E593-48C0-BBC1-30F500730FA9}
+		{C87A187B-3697-4BDA-9585-ECEF6E63694A} = {DD78812B-294A-4274-B72B-1E6E4B7D15FC}
 	EndGlobalSection
 EndGlobal

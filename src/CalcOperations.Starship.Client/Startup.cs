@@ -11,22 +11,21 @@ namespace CalcOperations.Starship.Client
 {
     public class Startup
     {
-        private readonly IConfiguration configuration;
-        private readonly IServiceProvider provider;
-        public IServiceProvider Provider => provider;
-        public IConfiguration Configuration => configuration;
+        public IServiceProvider Provider { get; set; }
+        public IConfiguration Configuration { get; set; }
         public Startup()
         {
+            // Add configuration file
+            Configuration = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json", false)
+                            .Build();
+            // DI
             var services = new ServiceCollection();
-
-            services.AddSingleton<IConfiguration>(configuration);
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddLogging();
             services.AddSingleton<IExternalStarshipService, ExternalStarshipService>();
             services.AddSingleton<IStopCalculationService, StopCalculationService>();
-            configuration.AddJsonFile("appsettings.json", false)
-                         .Build();
-
-            provider = services.BuildServiceProvider();
+            Provider = services.BuildServiceProvider();
         }
     }
 }

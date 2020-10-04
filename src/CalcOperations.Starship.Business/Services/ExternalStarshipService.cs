@@ -20,12 +20,12 @@ namespace CalcOperations.Starship.Business.Services
         {
             _logger = logger;
             externalServiceEndpoint = config.GetValue<string>("application:swapi_endpoint_starships") ?? throw new NullReferenceException("External SWAPI address not found");
-            pagination = 1;
         }
-        public async Task<List<StarshipResult>> GetAll()
+        public virtual async Task<List<StarshipResult>> GetAll()
         {
             var result = new List<StarshipResult>();
-
+            pagination = 1;
+            _logger.LogInformation("Calling SWAPI for starships...");
             var starshipResponse = await externalServiceEndpoint.SetQueryParam("page",pagination).GetJsonAsync<StarshipResponse>();
             result.AddRange(starshipResponse.Results);
 

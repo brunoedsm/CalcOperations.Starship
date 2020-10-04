@@ -20,9 +20,10 @@ namespace CalcOperations.Starship.Business.Services
         public List<StopCalculationResult> GetStopCalculationFromStarships(double distanceInMegaLights)
         {
             var result = new List<StopCalculationResult>();
-
+            _logger.LogInformation("Loading starship information from external service...");
             var starships = _externalStarshipService.GetAll().Result;
 
+            _logger.LogInformation("Calculating stops needed for each starship found...");
             starships.ForEach(delegate(StarshipResult starship){
                 result.Add(StopCalculationResultBuilder.Build(starship,distanceInMegaLights));
             });

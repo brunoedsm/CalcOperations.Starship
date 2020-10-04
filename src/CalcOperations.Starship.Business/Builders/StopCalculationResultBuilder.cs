@@ -1,5 +1,3 @@
-
-
 using System;
 using CalcOperations.Starship.Business.Entities;
 using CalcOperations.Starship.Business.Extensions;
@@ -22,7 +20,7 @@ namespace CalcOperations.Starship.Business.Builders
             }
             else{
                 var hours = distanceInMegaLights / starshipMegaLights;
-                var consumables = starship.Consumables.ToHour();
+                var consumables = starship.Consumables.ToHours();
                 var stops = consumables == 0 ? consumables : hours / consumables;
                 result.TotalStops = Math.Floor(stops);
             }

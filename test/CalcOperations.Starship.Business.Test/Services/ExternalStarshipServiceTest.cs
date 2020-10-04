@@ -13,6 +13,7 @@ namespace CalcOperations.Starship.Business.Test
         // Setup
         public ExternalStarshipServiceTest()
         {
+            // Due the fact that we consume external resource, this will be configured like integration test
             configuration = new ConfigurationBuilder()
                    .AddJsonFile("appsettings.json", false)
                    .Build();
