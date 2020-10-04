@@ -16,24 +16,31 @@ namespace CalcOperations.Starship.Business.Services
         private readonly string externalServiceEndpoint;
         private readonly ILogger _logger;
         private int pagination;
-        public ExternalStarshipService(IConfiguration config,ILogger<ExternalStarshipService> logger)
+        public ExternalStarshipService(IConfiguration config, ILogger<ExternalStarshipService> logger)
         {
             _logger = logger;
-            externalServiceEndpoint = config.GetValue<string>("application:swapi_endpoint_starships") ?? throw new NullReferenceException("External SWAPI address not found");
+            externalServiceEndpoint = config.GetValue<string>("Application:swapi_endpoint_starships") ?? throw new NullReferenceException("External SWAPI address not found");
         }
         public virtual async Task<List<StarshipResult>> GetAll()
         {
             var result = new List<StarshipResult>();
             pagination = 1;
             _logger.LogInformation("Calling SWAPI for starships...");
-            var starshipResponse = await externalServiceEndpoint.SetQueryParam("page",pagination).GetJsonAsync<StarshipResponse>();
-            result.AddRange(starshipResponse.Results);
-
-            while(starshipResponse.Next != null)
+            try
             {
-                pagination++;
-                starshipResponse = await externalServiceEndpoint.SetQueryParam("page",pagination).GetJsonAsync<StarshipResponse>();
-                result.AddRange(starshipResponse.Results);   
+                var starshipResponse = await externalServiceEndpoint.SetQueryParam("page", pagination).GetJsonAsync<StarshipResponse>();
+                result.AddRange(starshipResponse.Results);
+
+                while (starshipResponse.Next != null)
+                {
+                    pagination++;
+                    starshipResponse = await externalServiceEndpoint.SetQueryParam("page", pagination).GetJsonAsync<StarshipResponse>();
+                    result.AddRange(starshipResponse.Results);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message,ex);
             }
             return result;
         }

@@ -1,0 +1,67 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+pool:
+  name: S-Money
+  demands:
+  - Action -equals Build
+
+variables:
+  projects: |
+    src/CalcOperations.Starship.Client/CalcOperations.Starship.Client.csproj
+  buildConfiguration: 'Release'  
+
+trigger:
+  branches:
+    include: ['master', 'release/*', 'hotfixes/*' ]
+  paths:
+    include: [ 'src', 'build', 'test' ]
+
+steps:
+
+- task: DotNetCoreCLI@2
+  displayName: 'Restore'
+  inputs:
+    command: restore
+    feedsToUse: 'config'
+    nugetConfigPath: 'build/NuGet.Config'
+    projects: '$(projects)'  
+
+- task: DotNetCoreCLI@2 
+  displayName: 'Build CalcOperations.Starship'
+  inputs:
+    command: 'build'
+    projects: '$(projects)'
+    
+- task: DotNetCoreCLI@2
+  displayName: 'Unit test'
+  inputs:
+    command: 'test'
+    projects: 'test/**/*.csproj'
+    arguments: >
+      --configuration $(BuildConfiguration) 
+      /p:CollectCoverage=true 
+      /p:CoverletOutputFormat=opencover%2ccobertura
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/*cobertura.xml'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish'
+  inputs:
+    command: publish
+    projects:  '$(projects)'
+    zipAfterPublish: false
+    publishWebProjects: false
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/CalcOperations.Starship.Client'
+    ArtifactName: 'CalcOperations.Starship.Client'
+    publishLocation: 'Container'
